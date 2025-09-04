@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +19,14 @@
             overflow: hidden;
             text-align: center;
         }
+
         .task-indicator-wrapper {
             font-size: 2em;
             margin-bottom: 20px;
             color: #00ff41;
             text-shadow: 0 0 10px #00ff41;
         }
+
         .screen {
             background-color: #0d1a26;
             padding: 20px;
@@ -37,6 +40,7 @@
             justify-content: space-between;
             position: relative;
         }
+
         #story-text {
             font-size: 1.2em;
             text-align: left;
@@ -44,29 +48,41 @@
             animation: typing 2s steps(40, end);
             overflow: hidden;
         }
+
         @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
         }
+
         .progress-bar-container {
             width: 100%;
             background-color: #1a334a;
             border: 1px solid #00ff41;
             margin-top: 20px;
         }
+
         .progress-bar {
             height: 20px;
             background-color: #00ff41;
             width: 0;
             transition: width 0.5s;
         }
+
         .interactive-area {
             display: flex;
             flex-direction: column;
             gap: 15px;
             align-items: center;
         }
-        .password-input, .auth-input, .update-slider {
+
+        .password-input,
+        .auth-input,
+        .update-slider {
             background: none;
             border: 1px solid #00ff41;
             color: #00ff41;
@@ -75,6 +91,7 @@
             text-align: center;
             width: 80%;
         }
+
         .update-slider {
             width: 80%;
             -webkit-appearance: none;
@@ -83,6 +100,7 @@
             outline: none;
             transition: opacity .2s;
         }
+
         .update-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -91,6 +109,7 @@
             background: #00ff41;
             cursor: pointer;
         }
+
         .virus-area {
             width: 100%;
             height: 200px;
@@ -100,6 +119,7 @@
             overflow: hidden;
             cursor: crosshair;
         }
+
         .virus {
             width: 20px;
             height: 20px;
@@ -109,18 +129,35 @@
             animation: moveVirus 5s infinite;
             cursor: crosshair;
         }
+
         @keyframes moveVirus {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(100px, 150px); }
-            50% { transform: translate(250px, 50px); }
-            75% { transform: translate(300px, 120px); }
-            100% { transform: translate(0, 0); }
+            0% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(100px, 150px);
+            }
+
+            50% {
+                transform: translate(250px, 50px);
+            }
+
+            75% {
+                transform: translate(300px, 120px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
         }
+
         .file {
             border: 1px solid #00ff41;
             padding: 5px;
             cursor: pointer;
         }
+
         button {
             background: none;
             border: 1px solid #00ff41;
@@ -130,12 +167,53 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: #00ff41;
             color: #0d1a26;
         }
+
+        /* --- Responsive Styles for Mobile Phones --- */
+        @media (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+            .task-indicator-wrapper {
+                font-size: 1.5em;
+                margin-bottom: 10px;
+            }
+            .screen {
+                width: 95%;
+                height: 80vh;
+                padding: 10px;
+            }
+            #story-text {
+                font-size: 1em;
+            }
+            .password-input, .auth-input, .update-slider {
+                width: 90%;
+            }
+            button {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+            .virus-area {
+                height: 150px;
+            }
+            /* НОВЫЕ ИЗМЕНЕНИЯ ДЛЯ ФАЙЛОВ */
+            .file {
+                font-size: 0.7em; /* Уменьшаем размер шрифта в 2 раза */
+                padding: 3px 5px; /* Уменьшаем отступы */
+                min-width: unset; /* Убираем минимальную ширину, чтобы они сжимались */
+            }
+            .interactive-area > div[style*="flex"] { /* Это обращается к fileContainer */
+                gap: 5px; /* Уменьшаем зазор между файлами */
+                justify-content: center; /* Центрируем файлы */
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="task-indicator-wrapper">
         <span id="task-indicator">Task 1 of 5</span>
@@ -143,8 +221,10 @@
     <div class="screen">
         <div id="story-text">
             > Loading...
-            > You are a cyber guardian trapped in a digital labyrinth. To escape, you must complete 5 tasks by applying cybersecurity knowledge.
-            > First Task: A compromised terminal. To gain access, you need to set a **strong password**. It must be at least 12 characters long and include an uppercase letter, a lowercase letter, a number, and a symbol.
+            > You are a cyber guardian trapped in a digital labyrinth. To escape, you must complete 5 tasks by applying
+            cybersecurity knowledge.
+            > First Task: A compromised terminal. To gain access, you need to set a **strong password**. It must be at
+            least 12 characters long and include an uppercase letter, a lowercase letter, a number, and a symbol.
         </div>
         <div class="interactive-area" id="interactive-area">
             <input type="text" id="pass-input" class="password-input" placeholder="Enter password...">
@@ -192,7 +272,7 @@
                         <div class="virus-area" id="virus-area"></div>
                     `;
                     const virusArea = document.getElementById('virus-area');
-                    for(let i = 0; i < 40; i++) {
+                    for (let i = 0; i < 40; i++) {
                         const virus = document.createElement('div');
                         virus.className = 'virus';
                         virus.style.left = `${Math.random() * 90}%`;
@@ -207,7 +287,7 @@
                     virusArea.onclick = () => {
                         clickedCount++;
                         document.getElementById('click-count').textContent = `Safe Clicks: ${clickedCount} / 5`;
-                        if(clickedCount >= 5) {
+                        if (clickedCount >= 5) {
                             nextTask();
                         }
                     };
@@ -224,8 +304,22 @@
                     fileContainer.style.flexWrap = 'wrap';
                     fileContainer.style.gap = '10px';
                     interactiveArea.appendChild(fileContainer);
-                    for(let i = 0; i < 20; i++) {
-                        const isPersonalData = Math.random() > 0.5;
+
+                    // Создаем массив файлов
+                    const files = [];
+                    for(let i = 0; i < totalFilesToDestroy; i++) {
+                        files.push('personal');
+                    }
+                    for(let i = 0; i < 10; i++) {
+                        files.push('system');
+                    }
+                    
+                    // Перемешиваем массив, чтобы файлы были в разброс
+                    files.sort(() => Math.random() - 0.5);
+
+                    // Создаем элементы на основе перемешанного массива
+                    files.forEach(fileType => {
+                        const isPersonalData = fileType === 'personal';
                         const file = document.createElement('div');
                         file.textContent = isPersonalData ? '🔒 personal_data.txt' : '📄 system_file.dll';
                         file.className = 'file';
@@ -244,7 +338,7 @@
                             }
                         };
                         fileContainer.appendChild(file);
-                    }
+                    });
                 }
             },
             {
@@ -313,4 +407,5 @@
         tasks[0].action();
     </script>
 </body>
+
 </html>
