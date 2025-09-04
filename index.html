@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Guardian: Digital Escape</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0d1a26;
+            color: #00ff41;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+        .task-indicator-wrapper {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #00ff41;
+            text-shadow: 0 0 10px #00ff41;
+        }
+        .screen {
+            background-color: #0d1a26;
+            padding: 20px;
+            border: 2px solid #00ff41;
+            box-shadow: 0 0 15px #00ff41;
+            max-width: 800px;
+            width: 90%;
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        #story-text {
+            font-size: 1.2em;
+            text-align: left;
+            white-space: pre-wrap;
+            animation: typing 2s steps(40, end);
+            overflow: hidden;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #1a334a;
+            border: 1px solid #00ff41;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            height: 20px;
+            background-color: #00ff41;
+            width: 0;
+            transition: width 0.5s;
+        }
+        .interactive-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+        .password-input, .auth-input, .update-slider {
+            background: none;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 10px;
+            font-size: 1em;
+            text-align: center;
+            width: 80%;
+        }
+        .update-slider {
+            width: 80%;
+            -webkit-appearance: none;
+            height: 10px;
+            background: #1a334a;
+            outline: none;
+            transition: opacity .2s;
+        }
+        .update-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #00ff41;
+            cursor: pointer;
+        }
+        .virus-area {
+            width: 100%;
+            height: 200px;
+            background-color: #1a334a;
+            border: 1px dashed #ff004c;
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+        .virus {
+            width: 20px;
+            height: 20px;
+            background-color: #ff004c;
+            border-radius: 50%;
+            position: absolute;
+            animation: moveVirus 5s infinite;
+            cursor: crosshair;
+        }
+        @keyframes moveVirus {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(100px, 150px); }
+            50% { transform: translate(250px, 50px); }
+            75% { transform: translate(300px, 120px); }
+            100% { transform: translate(0, 0); }
+        }
+        .file {
+            border: 1px solid #00ff41;
+            padding: 5px;
+            cursor: pointer;
+        }
+        button {
+            background: none;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #00ff41;
+            color: #0d1a26;
+        }
+    </style>
+</head>
+<body>
+    <div class="task-indicator-wrapper">
+        <span id="task-indicator">Task 1 of 5</span>
+    </div>
+    <div class="screen">
+        <div id="story-text">
+            > Loading...
+            > You are a cyber guardian trapped in a digital labyrinth. To escape, you must complete 5 tasks by applying cybersecurity knowledge.
+            > First Task: A compromised terminal. To gain access, you need to set a **strong password**. It must be at least 12 characters long and include an uppercase letter, a lowercase letter, a number, and a symbol.
+        </div>
+        <div class="interactive-area" id="interactive-area">
+            <input type="text" id="pass-input" class="password-input" placeholder="Enter password...">
+            <button onclick="checkPass()">Submit</button>
+        </div>
+        <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        const storyText = document.getElementById('story-text');
+        const interactiveArea = document.getElementById('interactive-area');
+        const progressBar = document.getElementById('progress-bar');
+        const taskIndicator = document.getElementById('task-indicator');
+        let currentTask = 1;
+        let progress = 0;
+        const totalTasks = 5;
+
+        const tasks = [
+            {
+                text: `> First Task: A compromised terminal. To gain access, you need to set a **strong password**. It must be at least 12 characters long and include an uppercase letter, a lowercase letter, a number, and a symbol.`,
+                action: () => {
+                    interactiveArea.innerHTML = `
+                        <input type="text" id="pass-input" class="password-input" placeholder="Enter password...">
+                        <button onclick="checkPass()">Submit</button>
+                    `;
+                }
+            },
+            {
+                text: `> Second Task: Access to data is restricted. A 6-digit code for **two-factor authentication** has been sent to your device. Enter the code quickly before it expires. The code is **133742**.`,
+                action: () => {
+                    interactiveArea.innerHTML = `
+                        <input type="text" id="auth-input" class="auth-input" placeholder="Enter the 6-digit code...">
+                        <button onclick="check2FA()">Submit</button>
+                    `;
+                }
+            },
+            {
+                text: `> Third Task: **Phishing virus** area. Mousing over the wrong elements will steal your data. You must click on 5 safe spots to proceed. Avoid the red, moving viruses.`,
+                action: () => {
+                    let clickedCount = 0;
+                    interactiveArea.innerHTML = `
+                        <p id="click-count">Safe Clicks: 0 / 5</p>
+                        <div class="virus-area" id="virus-area"></div>
+                    `;
+                    const virusArea = document.getElementById('virus-area');
+                    for(let i = 0; i < 40; i++) {
+                        const virus = document.createElement('div');
+                        virus.className = 'virus';
+                        virus.style.left = `${Math.random() * 90}%`;
+                        virus.style.top = `${Math.random() * 90}%`;
+                        virus.style.animationDelay = `${Math.random() * 2}s`;
+                        virus.onclick = (e) => {
+                            e.stopPropagation();
+                            gameOver('> You clicked on a virus. Your data has been stolen.');
+                        };
+                        virusArea.appendChild(virus);
+                    }
+                    virusArea.onclick = () => {
+                        clickedCount++;
+                        document.getElementById('click-count').textContent = `Safe Clicks: ${clickedCount} / 5`;
+                        if(clickedCount >= 5) {
+                            nextTask();
+                        }
+                    };
+                }
+            },
+            {
+                text: `> Fourth Task: **Protect your personal data**. Hackers have mixed your personal files with system files. You must click and destroy 10 personal files without touching the system files.`,
+                action: () => {
+                    let correctDestroyed = 0;
+                    const totalFilesToDestroy = 10;
+                    interactiveArea.innerHTML = `<p>Destroyed: <span id="destroyed-count">0</span> / ${totalFilesToDestroy}</p>`;
+                    const fileContainer = document.createElement('div');
+                    fileContainer.style.display = 'flex';
+                    fileContainer.style.flexWrap = 'wrap';
+                    fileContainer.style.gap = '10px';
+                    interactiveArea.appendChild(fileContainer);
+                    for(let i = 0; i < 20; i++) {
+                        const isPersonalData = Math.random() > 0.5;
+                        const file = document.createElement('div');
+                        file.textContent = isPersonalData ? '🔒 personal_data.txt' : '📄 system_file.dll';
+                        file.className = 'file';
+                        file.onclick = () => {
+                            if (isPersonalData) {
+                                correctDestroyed++;
+                                document.getElementById('destroyed-count').textContent = correctDestroyed;
+                                file.style.textDecoration = 'line-through';
+                                file.style.opacity = '0.5';
+                                file.onclick = null;
+                                if (correctDestroyed === totalFilesToDestroy) {
+                                    nextTask();
+                                }
+                            } else {
+                                gameOver('> You destroyed a system file. The labyrinth has reset.');
+                            }
+                        };
+                        fileContainer.appendChild(file);
+                    }
+                }
+            },
+            {
+                text: `> Fifth Task: Outdated software. To bypass the final barrier, you must fully **update the program**. Drag the slider to 100%.`,
+                action: () => {
+                    interactiveArea.innerHTML = `
+                        <input type="range" min="0" max="100" value="0" class="update-slider" id="update-slider">
+                        <p id="update-percent">0%</p>
+                    `;
+                    const slider = document.getElementById('update-slider');
+                    const percentText = document.getElementById('update-percent');
+                    slider.oninput = () => {
+                        percentText.textContent = `${slider.value}%`;
+                        if (slider.value === '100') {
+                            nextTask();
+                        }
+                    };
+                }
+            }
+        ];
+
+        function nextTask() {
+            progress += 20;
+            progressBar.style.width = `${progress}%`;
+            currentTask++;
+
+            if (currentTask > totalTasks) {
+                storyText.textContent = `> Congratulations! You have escaped the digital labyrinth! Your cybersecurity knowledge saved you. You are a true Cyber Guardian!`;
+                interactiveArea.innerHTML = '';
+                taskIndicator.textContent = 'Victory!';
+                return;
+            }
+
+            taskIndicator.textContent = `Task ${currentTask} of ${totalTasks}`;
+            storyText.textContent = `> ${tasks[currentTask - 1].text}`;
+            tasks[currentTask - 1].action();
+        }
+
+        function gameOver(message) {
+            storyText.textContent = `> Error! ${message} Game over.`;
+            interactiveArea.innerHTML = `
+                <button onclick="location.reload()">Try Again</button>
+            `;
+            progressBar.style.width = '0%';
+            taskIndicator.textContent = 'Failure';
+        }
+
+        function checkPass() {
+            const pass = document.getElementById('pass-input').value;
+            if (pass.length >= 12 && /[A-Z]/.test(pass) && /[a-z]/.test(pass) && /[0-9]/.test(pass) && /[!@#$%^&*()]/.test(pass)) {
+                nextTask();
+            } else {
+                gameOver('> Your password is too weak. The system rejected it.');
+            }
+        }
+
+        function check2FA() {
+            const code = document.getElementById('auth-input').value;
+            if (code === '133742') {
+                nextTask();
+            } else {
+                gameOver('> Invalid code. The hacker gained access to your data.');
+            }
+        }
+
+        tasks[0].action();
+    </script>
+</body>
+</html>
